@@ -1,2 +1,5 @@
 node_modules/
 dist/
+serviceAccountKey.jsongit c/
+.env
+serviceAccountKey.json

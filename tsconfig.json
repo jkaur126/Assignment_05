@@ -1,32 +1,35 @@
 {
   "compilerOptions": {
-    "target": "ES2020",                      
-    "module": "commonjs",                    
-    "rootDir": "./src",                      
-    "outDir": "./dist",                      
-    "moduleResolution": "node",              
-    "baseUrl": "./",                         
+    "target": "ES2020",
+    "module": "commonjs",
+    "rootDir": "./src",
+    "outDir": "./dist",
+    "strict": true,
+    "esModuleInterop": true,
+    "skipLibCheck": true,
+    "forceConsistentCasingInFileNames": true,
+    "resolveJsonModule": true,
+    "baseUrl": "./",
     "paths": {
       "*": ["*"]
     },
-
-    "strict": true,                          
-    "noImplicitAny": true,                   
-    "strictNullChecks": true,                
-    "strictPropertyInitialization": true,   
-    "noImplicitThis": true,                  
-    "forceConsistentCasingInFileNames": true,
-    "noUnusedLocals": true,                 
-    "noUnusedParameters": false,             
-    "alwaysStrict": true,                    
-    "esModuleInterop": true,                 
-    "allowSyntheticDefaultImports": true,    
-    "resolveJsonModule": true,               
-    "skipLibCheck": true,                    
-    "sourceMap": true     
-   },
-
- "include": ["src/**/*","test/**/*","config/**/*"],
-
- "exclude": ["node_modules","dist","coverage"],
+    "noImplicitAny": true,
+    "strictNullChecks": true,
+    "noUnusedLocals": false,
+    "alwaysStrict": true
+  },
+  "include": [
+    "src/**/*",
+    "config/**/*",
+    "tests/**/*",
+    "jest.config.ts"
+  ],
+  "exclude": [
+    "node_modules",
+    "dist"
+  ],
+  "ts-node": {
+    "files": true,
+    "require": ["dotenv/config"]
+  }
 }

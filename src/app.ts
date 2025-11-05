@@ -10,6 +10,7 @@ import { swaggerSpec } from "./config/swaggerconfig";
 import employeeRoutes from "./api/v1/routes/employeeRoutes";
 import branchRoutes from "./api/v1/routes/branchRoutes";
 
+
 const app: Application = express();
 
 // ===== Middleware =====
@@ -53,7 +54,6 @@ app.use(cors(corsOptions));
 
 /**
  * Swagger UI setup for API documentation.
- * Access your documentation at: http://localhost:3000/api-docs
  */
 app.use("/api-docs", swaggerUi.serve, swaggerUi.setup(swaggerSpec));
 

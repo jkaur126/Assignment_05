@@ -1,8 +1,9 @@
 /**
- * Swagger/OpenAPI configuration.
+ * @fileoverview Swagger/OpenAPI configuration for PiXELL-River Financial API.
+ * Defines reusable specification metadata and scanning paths for inline documentation.
  */
-import swaggerJSDoc from "swagger-jsdoc";
-import { Options } from "swagger-jsdoc";
+
+import swaggerJSDoc, { Options } from "swagger-jsdoc";
 
 /**
  * @description Configuration options for generating the OpenAPI specification.
@@ -23,12 +24,16 @@ const options: Options = {
       }
     ]
   },
-  // Path to the route files containing OpenAPI annotations
-  apis: ["./src/api/v1/routes/*.ts"]
+
+  /**
+   * @description
+   * Paths to files containing inline @openapi annotations.
+   * Includes both route files (endpoints) and validation files (schema components).
+   */
+  apis: ["./src/api/v1/routes/*.ts", "./src/api/v1/validation/*.ts"]
 };
 
 /**
- * @description Generated OpenAPI specification.
+ * @description Generated OpenAPI specification object for use in Swagger UI.
  */
 export const swaggerSpec = swaggerJSDoc(options);
-

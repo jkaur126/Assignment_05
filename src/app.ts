@@ -1,6 +1,6 @@
 /**
- * @fileoverview Express app setup with advanced Helmet, CORS, and Swagger configuration
- * for API security, documentation, and logging.
+ * @fileoverview Express application setup for PiXELL-River Financial API.
+ * Includes Helmet, CORS, Swagger (OpenAPI), logging, and structured routing.
  */
 
 import express, { Application, Request, Response } from "express";
@@ -19,40 +19,32 @@ dotenv.config();
 // ===== Initialize Express app =====
 const app: Application = express();
 
-/**
- * Apply Helmet security middleware before other middlewares.
- * This helps secure HTTP headers and mitigate common attacks.
- */
-app.use(getHelmetConfig());
+// ===== Middleware Setup =====
+app.use(express.json());               // Parse incoming JSON
+app.use(morgan("combined"));           // HTTP request logging
+app.use(getHelmetConfig());            // Apply Helmet security headers
+app.use(getCorsConfig());              // Apply advanced CORS configuration
 
+// ===== Swagger UI Setup =====
 /**
- * Logging and JSON parsing middleware.
- */
-app.use(morgan("combined"));
-app.use(express.json());
-
-/**
- * Apply centralized CORS configuration.
- * This dynamically adjusts based on NODE_ENV (development/production).
- */
-app.use(getCorsConfig());
-
-/**
- * Swagger UI setup for interactive API documentation.
+ * Swagger UI endpoint for API documentation.
+ * Accessible at: http://localhost:3000/api-docs
  */
 app.use("/api-docs", swaggerUi.serve, swaggerUi.setup(swaggerSpec));
 
+// ===== Health Check Endpoint =====
 /**
- * Health check endpoint for uptime and monitoring.
+ * @route GET /health
+ * @description Simple health check endpoint for uptime verification.
+ * @returns {string} Server status message.
  */
 app.get("/health", (_req: Request, res: Response): void => {
   res.status(200).send("Server is healthy");
 });
 
-/**
- * Main API routes.
- */
+// ===== API Routes =====
 app.use("/api/v1/employees", employeeRoutes);
 app.use("/api/v1/branches", branchRoutes);
 
+// ===== Export the Express app =====
 export default app;

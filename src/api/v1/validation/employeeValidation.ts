@@ -33,6 +33,17 @@ import Joi from "joi";
  *         branchId:
  *           type: string
  *           example: "1"
+ *
+ *     EmployeeInput:
+ *       allOf:
+ *         - $ref: '#/components/schemas/Employee'
+ *       example:
+ *         name: "Alice Johnson"
+ *         position: "Branch Manager"
+ *         department: "Management"
+ *         email: "alice.johnson@pixell-river.com"
+ *         phone: "604-555-0148"
+ *         branchId: "1"
  */
 
 /**
@@ -45,6 +56,5 @@ export const employeeSchema = Joi.object({
   department: Joi.string().required(),
   email: Joi.string().email().required(),
   phone: Joi.string().min(10).required(),
-  branchId: Joi.string().required()
+  branchId: Joi.string().required(),
 });
-

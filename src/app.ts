@@ -1,7 +1,9 @@
 /**
- * Express app setup with advanced Helmet configuration for API security.
+ * Express app setup with advanced Helmet, CORS, and Swagger configuration for API security and documentation.
  */
+
 import express, { Application, Request, Response } from "express";
+import dotenv from "dotenv";
 import morgan from "morgan";
 import helmet, { HelmetOptions } from "helmet";
 import cors from "cors";
@@ -10,7 +12,10 @@ import { swaggerSpec } from "./config/swaggerconfig";
 import employeeRoutes from "./api/v1/routes/employeeRoutes";
 import branchRoutes from "./api/v1/routes/branchRoutes";
 
+// ===== Load environment variables first =====
+dotenv.config();
 
+// ===== Initialize Express app =====
 const app: Application = express();
 
 // ===== Middleware =====
@@ -29,9 +34,9 @@ const helmetConfig: HelmetOptions = {
     directives: {
       "default-src": ["'self'"],
       "object-src": ["'none'"],
-      "cross-origin-opener-policy": ["same-origin"]
-    }
-  }
+      "cross-origin-opener-policy": ["same-origin"],
+    },
+  },
 };
 
 // Apply Helmet security headers
@@ -42,11 +47,14 @@ app.use(helmet(helmetConfig));
  * Allows requests from your local front-end and GitHub Pages deployment.
  */
 const corsOptions = {
-  origin: ["http://localhost:5173", "https://your-gh-pages-site.github.io"],
+  origin: [
+    "http://localhost:5173",
+    "https://your-gh-pages-site.github.io", // Replace with your real GitHub Pages URL
+  ],
   methods: ["GET", "POST", "PUT", "DELETE"],
   allowedHeaders: ["Content-Type", "Authorization"],
   credentials: false,
-  optionsSuccessStatus: 204
+  optionsSuccessStatus: 204,
 };
 
 // Apply CORS with custom options
@@ -64,7 +72,7 @@ app.get("/health", (_req: Request, res: Response): void => {
   res.status(200).send("Server is healthy");
 });
 
-// Routes 
+// ===== Routes =====
 app.use("/api/v1/employees", employeeRoutes);
 app.use("/api/v1/branches", branchRoutes);
 
